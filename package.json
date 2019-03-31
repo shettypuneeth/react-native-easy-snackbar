@@ -1,0 +1,24 @@
+{
+  "name": "react-native-easy-snackbar",
+  "version": "1.0.0",
+  "description": "Snackbar component for iOS and Android",
+  "main": "index.js",
+  "repository": "https://github.com/shettypuneeth/react-native-easy-snackbar.git",
+  "author": "@shettypuneeth",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-native": "^0.59.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  }
+}

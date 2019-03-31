@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "prettier.eslintIntegration": true,
+  "cSpell.words": [
+    "collapsable",
+    "snackbars"
+  ]
+}
