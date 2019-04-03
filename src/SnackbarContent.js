@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import React, { useState, userRef } from 'react';
+import React, { useState, userRef, useEffect } from 'react';
 // eslint-disable-next-line import/no-unresolved
 import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
@@ -19,6 +19,7 @@ const SnackbarContent = (props) => {
   const [contentHeight, setContentHeight] = useState(0);
   const [height] = useState(new Animated.Value(0));
   const contentHandle = userRef();
+  const isMounted = userRef(false);
 
   const {
     children, show, style, enablePointerEvents
@@ -28,7 +29,6 @@ const SnackbarContent = (props) => {
     // way to wait for the state change to be applied before subsequent statements are executed?
     setFlowState(FLOW_STATE.measuring);
 
-    // eslint-disable-next-line no-undef
     requestAnimationFrame(() => {
       if (!contentHandle.current) {
         setFlowState(FLOW_STATE.idle);
@@ -43,7 +43,7 @@ const SnackbarContent = (props) => {
     });
   };
 
-  const transitionToHeight = (targetHeight) => {
+  const transitionToHeight = (targetHeight, callback) => {
     const { duration } = props;
     if (_animation) _animation.stop();
     setAnimating(true);
@@ -53,21 +53,8 @@ const SnackbarContent = (props) => {
       duration
     }).start(() => {
       setAnimating(false);
+      if (callback) callback();
     });
-  };
-
-  const toggleShow = (showSnackbar) => {
-    if (!showSnackbar) {
-      transitionToHeight(0);
-    } else if (!contentHandle.current) {
-      if (flowState === FLOW_STATE.measured) {
-        transitionToHeight(contentHandle);
-      }
-    } else {
-      measureContent((measuredHeight) => {
-        transitionToHeight(measuredHeight);
-      });
-    }
   };
 
   const handleLayoutChange = (event) => {
@@ -82,6 +69,37 @@ const SnackbarContent = (props) => {
     height.setValue(measuredHeight);
     setContentHeight(measuredHeight);
   };
+
+  const performEnter = () => {
+    if (!isMounted.current) return;
+    if (!contentHandle.current) {
+      if (flowState === FLOW_STATE.measured) {
+        transitionToHeight(contentHandle);
+      }
+    } else {
+      measureContent((measuredHeight) => {
+        transitionToHeight(measuredHeight);
+      });
+    }
+  };
+
+  const performExit = () => {
+    if (!isMounted.current) return;
+    transitionToHeight(0, props.onExited);
+  };
+
+  useEffect(() => {
+    if (!isMounted.current) isMounted.current = true;
+
+    if (props.show) {
+      performEnter();
+    } else {
+      performExit();
+    }
+    return () => {
+      isMounted.current = false;
+    };
+  }, [show]);
 
   if (!show) return null;
 
@@ -120,6 +138,7 @@ SnackbarContent.propTypes = {
   children: PropTypes.node.isRequired,
   duration: PropTypes.number,
   enablePointerEvents: PropTypes.bool,
+  onExited: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired
 };
 SnackbarContent.defaultProps = {

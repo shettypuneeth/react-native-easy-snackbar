@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 // eslint-disable-next-line import/no-unresolved
 import { StyleSheet, View } from 'react-native';
 
@@ -13,21 +13,41 @@ const queue = [];
 const SnackbarHost = (props) => {
   const manager = useRef(null);
 
+  useEffect(() => {
+    while (queue.length && manager.current) {
+      const action = queue.pop();
+      const { key, type, children } = action;
+
+      // eslint-disable-next-line default-case
+      switch (type) {
+        case 'mount':
+          manager.current.mount({ key, children });
+          break;
+        case 'update':
+          manager.current.update({ key, children });
+          break;
+        case 'unmount':
+          manager.current.unmount(key);
+          break;
+      }
+    }
+  }, []);
+
   const mount = (children) => {
     const key = nextKey++;
-    if (manager) {
-      manager.mount({ key, children });
+    if (manager.current) {
+      manager.current.mount({ key, children });
     } else {
       queue.push({ type: 'mount', key, children });
     }
     return key;
   };
 
-  const update = (key, children) => {
-    if (manager) {
-      manager.update({ key, children });
+  const update = ({ key, children }) => {
+    if (manager.current) {
+      manager.current.update({ key, children });
     } else {
-      const op = { type: 'mount', key, children };
+      const op = { type: 'update', key, children };
       const index = queue.findIndex(
         o => o.type === 'mount' || (o.type === 'update' && o.key === key)
       );
@@ -40,8 +60,8 @@ const SnackbarHost = (props) => {
   };
 
   const unmount = (key) => {
-    if (manager) {
-      manager.unmount({ key });
+    if (manager.current) {
+      manager.current.unmount(key);
     } else {
       queue.push({ type: 'unmount', key });
     }

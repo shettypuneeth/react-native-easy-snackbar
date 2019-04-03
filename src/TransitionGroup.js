@@ -3,7 +3,6 @@
  * https://github.com/reactjs/react-transition-group/blob/master/src/TransitionGroup.js
  */
 
-/* eslint-disable react/forbid-prop-types */
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-unresolved
 import React from 'react';
@@ -81,6 +80,7 @@ TransitionGroup.propTypes = {
    * you can pass in `component={null}`. This is useful if the wrapping div
    * borks your css styles.
    */
+  // eslint-disable-next-line react/forbid-prop-types
   component: PropTypes.any,
   /**
    * A set of `<Transition>` components, that are toggled `in` and out as they

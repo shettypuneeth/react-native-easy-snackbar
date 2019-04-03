@@ -13,13 +13,13 @@ export default class SnackbarManager extends React.PureComponent {
     this.unmount = this.unmount.bind(this);
   }
 
-  mount(key, children) {
+  mount({ key, children }) {
     this.setState(state => ({
       snackbars: [...state.snackbars, { key, children }]
     }));
   }
 
-  update(key, children) {
+  update({ key, children }) {
     this.setState(state => ({
       snackbars: state.snackbars.map((item) => {
         if (item.key === key) {
