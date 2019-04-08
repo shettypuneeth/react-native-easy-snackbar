@@ -10,8 +10,8 @@ const SnackbarConsumer = (props) => {
       requestAnimationFrame(() => {
         key.current = props.manager.mount(props.children);
       });
-    } else {
-      if (!didMount.current) didMount.current = true;
+      didMount.current = true;
+    } else if (key.current) {
       props.manager.update({ key: key.current, children: props.children });
     }
     return () => props.manager.unmount(key.current);

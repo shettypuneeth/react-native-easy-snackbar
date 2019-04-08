@@ -15,7 +15,6 @@ class TransitionGroup extends React.Component {
     super(props, context);
     const handleExited = this.handleExited.bind(this);
 
-    // Initial children should all be entering, dependent on appear
     this.state = { handleExited, firstRender: true };
   }
 
@@ -38,14 +37,10 @@ class TransitionGroup extends React.Component {
     };
   }
 
-  handleExited(child, node) {
+  handleExited(child) {
     const currentChildMapping = getChildMapping(this.props.children);
 
     if (child.key in currentChildMapping) return;
-
-    if (child.props.onExited) {
-      child.props.onExited(node);
-    }
 
     if (this.mounted) {
       this.setState((state) => {
@@ -58,30 +53,13 @@ class TransitionGroup extends React.Component {
   }
 
   render() {
-    const { component: Component, childFactory, ...props } = this.props;
-    const children = values(this.state.children).map(childFactory);
+    const children = values(this.state.children);
 
-    delete props.appear;
-    delete props.enter;
-    delete props.exit;
-
-    if (Component === null) {
-      return children;
-    }
-    return <Component {...props}>{children}</Component>;
+    return <React.Fragment>{children}</React.Fragment>;
   }
 }
 
 TransitionGroup.propTypes = {
-  /**
-   * `<TransitionGroup>` renders a `<div>` by default. You can change this
-   * behavior by providing a `component` prop.
-   * If you use React v16+ and would like to avoid a wrapping `<div>` element
-   * you can pass in `component={null}`. This is useful if the wrapping div
-   * borks your css styles.
-   */
-  // eslint-disable-next-line react/forbid-prop-types
-  component: PropTypes.any,
   /**
    * A set of `<Transition>` components, that are toggled `in` and out as they
    * leave. the `<TransitionGroup>` will inject specific transition props, so
@@ -95,38 +73,7 @@ TransitionGroup.propTypes = {
    * the transition child as you change its content, this will cause
    * `TransitionGroup` to transition the child out and back in.
    */
-  children: PropTypes.node,
-
-  /**
-   * A convenience prop that enables or disables appear animations
-   * for all children. Note that specifying this will override any defaults set
-   * on individual children Transitions.
-   */
-  appear: PropTypes.bool,
-  /**
-   * A convenience prop that enables or disables enter animations
-   * for all children. Note that specifying this will override any defaults set
-   * on individual children Transitions.
-   */
-  enter: PropTypes.bool,
-  /**
-   * A convenience prop that enables or disables exit animations
-   * for all children. Note that specifying this will override any defaults set
-   * on individual children Transitions.
-   */
-  exit: PropTypes.bool,
-
-  /**
-   * You may need to apply reactive updates to a child as it is exiting.
-   * This is generally done by using `cloneElement` however in the case of an exiting
-   * child the element has already been removed and not accessible to the consumer.
-   *
-   * If you do need to update a child as it leaves you can provide a `childFactory`
-   * to wrap every child, even the ones that are leaving.
-   *
-   * @type Function(child: ReactElement) -> ReactElement
-   */
-  childFactory: PropTypes.func
+  children: PropTypes.node
 };
 
 export default TransitionGroup;

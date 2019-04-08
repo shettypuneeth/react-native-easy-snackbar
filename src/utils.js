@@ -108,7 +108,7 @@ export function getNextChildMapping(nextProps, prevChildMapping, onExited) {
     const hasNext = key in nextChildMapping;
 
     const prevChild = prevChildMapping[key];
-    const isLeaving = isValidElement(prevChild) && !prevChild.props.in;
+    const isLeaving = isValidElement(prevChild) && !prevChild.props.show;
 
     // item is new (entering)
     if (hasNext && (!hasPrev || isLeaving)) {
@@ -120,14 +120,14 @@ export function getNextChildMapping(nextProps, prevChildMapping, onExited) {
     } else if (!hasNext && hasPrev && !isLeaving) {
       // item is old (exiting)
       // console.log('leaving', key)
-      children[key] = cloneElement(child, { in: false });
+      children[key] = cloneElement(child, { show: false });
     } else if (hasNext && hasPrev && isValidElement(prevChild)) {
       // item hasn't changed transition states
       // copy over the last transition props;
       // console.log('unchanged', key)
       children[key] = cloneElement(child, {
         onExited: onExited.bind(null, child),
-        show: prevChild.props.in
+        show: prevChild.props.show
       });
     }
   });
