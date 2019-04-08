@@ -21,12 +21,12 @@ import Notification from './Notification';
 
 const App = () => {
   return (
-    <Snackbar.host>
+    <Snackbar.Host>
       <View>
         <Text>Welcome to the desert of the real</Text>
         <Notification show={true} />
       </View>
-    </Snackbar.host>
+    </Snackbar.Host>
   );
 };
 ```
@@ -57,3 +57,10 @@ export default Notification;
 
 - Yarn: `yarn install react-native-easy-snackbar`
 - NPM: `npm install --save react-native-easy-snackbar`
+
+# Prior Art
+
+This component draws inspiration from the following libraries. Very grateful to the library authors for building such great products and open sourcing it.
+
+1. [react-native-paper](https://github.com/callstack/react-native-paper)
+2. [react-transition-group](https://github.com/reactjs/react-transition-group)
