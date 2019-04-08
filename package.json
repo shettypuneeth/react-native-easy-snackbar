@@ -8,7 +8,7 @@
     "android",
     "snackbar"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Snackbar component for iOS and Android",
   "main": "index.js",
   "repository": "https://github.com/shettypuneeth/react-native-easy-snackbar.git",

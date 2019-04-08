@@ -61,7 +61,7 @@ export default Notification;
 
 ## Installation
 
-- Yarn: `yarn install react-native-easy-snackbar`
+- Yarn: `yarn add react-native-easy-snackbar`
 - NPM: `npm install --save react-native-easy-snackbar`
 
 ## Features
