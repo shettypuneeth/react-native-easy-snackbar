@@ -1,5 +1,13 @@
 {
   "name": "react-native-easy-snackbar",
+  "keywords": [
+    "react-native",
+    "react-native-snackbar",
+    "react",
+    "ios",
+    "android",
+    "snackbar"
+  ],
   "version": "1.0.0",
   "description": "Snackbar component for iOS and Android",
   "main": "index.js",

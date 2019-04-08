@@ -1,5 +1,7 @@
 # react-native-easy-snackbar
 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 Easy to use snackbar component for iOS and Android.
 
 Snackbar provides feedback about an operation through a message at the bottom of the screen. They could also have an optional action.
@@ -53,12 +55,21 @@ const Notification = props => {
 export default Notification;
 ```
 
+## Demo
+
+![](./rn-snackbar.gif)
+
 ## Installation
 
 - Yarn: `yarn install react-native-easy-snackbar`
 - NPM: `npm install --save react-native-easy-snackbar`
 
-# Prior Art
+## Features
+
+- [x] Slide in and out animation.
+- [x] Support for dynamic content height.
+
+## Prior Art
 
 This component draws inspiration from the following libraries. Very grateful to the library authors for building such great products and open sourcing it.
 

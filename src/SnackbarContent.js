@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import React, { useState, useRef, useEffect } from 'react';
 // eslint-disable-next-line import/no-unresolved
-import { Animated, StyleSheet } from 'react-native';
+import { Animated, Easing, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
 const FLOW_STATE = {
@@ -47,7 +47,8 @@ const SnackbarContent = (props) => {
 
     Animated.timing(height, {
       toValue: targetHeight,
-      duration
+      duration,
+      easing: Easing.in
     }).start(() => {
       setAnimating(false);
       if (callback) {
