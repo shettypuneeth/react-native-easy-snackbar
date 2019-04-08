@@ -45,7 +45,7 @@ const Notification = props => {
 
   return (
     <Snackbar>
-      <Text>Hey, I'm a snackbar</Text>
+      <Text>Hey, I am a snackbar</Text>
     </Snackbar>
   );
 };
