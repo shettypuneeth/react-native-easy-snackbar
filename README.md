@@ -57,7 +57,7 @@ export default Notification;
 
 ## Demo
 
-![](./rn-snackbar.gif)
+<img src="./rn-snackbar.gif" alt="drawing" width="300"/>
 
 ## Installation
 
